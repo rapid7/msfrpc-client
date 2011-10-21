@@ -1,0 +1,2 @@
+require 'msfrpc-client/client'
+
