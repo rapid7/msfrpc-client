@@ -24,18 +24,18 @@ class Client
 	#
 	# Create a new RPC Client instance
 	#
-	def initialize(info={})
+	def initialize(config={})
+
 		self.info = {
 			:host => '127.0.0.1',
 			:port => 3790,
-			:uri  => '/api/',
+			:uri  => '/api/' + Msf::RPC::API_VERSION,
 			:ssl  => true,
 			:ssl_version => 'SSLv3',
 			:context     => {}
-		}.merge(info)
+		}.merge(config)
 
-		info[:port] = info[:port].to_i
-
+		# Set the token
 		self.token = self.info[:token]
 
 		if not self.token and (info[:user] and info[:pass])
@@ -185,7 +185,14 @@ class Client
 				yaml = ::YAML.load(yaml_data) rescue nil
 				if yaml and yaml.kind_of?(::Hash) and yaml['options']
 					yaml['options'].each_pair do |k,v|
-						options[k.intern] = v
+						case k
+						when 'ssl'
+							options[k.intern] = !!(v.to_s =~ /^(t|y|1)/i)
+						when 'port'
+							options[k.intern] = v.to_i
+						else
+						  options[k.intern] = v
+					  end
 					end
 				else
 					$stderr.puts "[-] Could not parse configuration file: #{config_file}"
@@ -202,7 +209,7 @@ class Client
 		end
 
 		if options[:ssl]
-			options[:ssl] = (options[:ssl] =~ /(1|Y|T)/i ? true : false )
+			options[:ssl] = !!(options[:ssl].to_s =~ /^(t|y|1)/i)
 		end
 
 		options
