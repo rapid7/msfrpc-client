@@ -31,7 +31,7 @@ class Client
 			:port => 3790,
 			:uri  => '/api/' + Msf::RPC::API_VERSION,
 			:ssl  => true,
-			:ssl_version => 'SSLv3',
+			:ssl_version => 'TLS1',
 			:context     => {}
 		}.merge(config)
 

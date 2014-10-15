@@ -3,7 +3,7 @@ $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'msfrpc-client'
-  s.version     = '1.0.2'
+  s.version     = '1.0.3'
   s.authors     = [
       'HD Moore'
   ]
