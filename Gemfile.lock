@@ -1,0 +1,39 @@
+PATH
+  remote: .
+  specs:
+    msfrpc-client (1.1.0)
+      msgpack
+      rex
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    filesize (0.1.1)
+    jsobfu (0.4.2)
+      rkelly-remix
+    json (2.0.3)
+    metasm (1.0.3)
+    mini_portile2 (2.1.0)
+    msgpack (1.1.0)
+    nokogiri (1.7.0.1)
+      mini_portile2 (~> 2.1.0)
+    rb-readline-r7 (0.5.2.0)
+    rex (2.0.10)
+      filesize
+      jsobfu (~> 0.4.1)
+      json
+      metasm (~> 1.0.2)
+      nokogiri
+      rb-readline-r7
+      robots
+    rkelly-remix (0.0.7)
+    robots (0.10.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  msfrpc-client!
+
+BUNDLED WITH
+   1.14.4
