@@ -1,19 +1,22 @@
 # -*- encoding: utf-8 -*-
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
+require 'msfrpc-client/version'
 
 Gem::Specification.new do |s|
   s.name        = 'msfrpc-client'
-  s.version     = '1.0.3'
+  s.version     = Msf::RPC::VERSION
   s.authors     = [
-      'HD Moore'
+      'HD Moore',
+      'Brent Cook'
   ]
   s.email       = [
-      'hdm@rapid7.com'
+      'x@hdm.io',
+      'bcook@rapid7.com'
   ]
   s.homepage    = "http://www.metasploit.com/"
-  s.summary     = %q{Ruby API for the Rapid7 Metasploit Pro RPC service}
+  s.summary     = %q{Ruby API for the Rapid7 Metasploit RPC service}
   s.description = %q{
-   This gem provides a Ruby client API to access the Rapid7 Metasploit Pro RPC service.
+   This gem provides a Ruby client API to access the Rapid7 Metasploit RPC service.
   }.gsub(/\s+/, ' ').strip
 
   s.files         = `git ls-files`.split("\n")
@@ -22,6 +25,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.licenses      = ['BSD-2-Clause']
 
-  s.add_runtime_dependency 'msgpack', '~> 0.5.8', '>= 0.5.8'
-  s.add_runtime_dependency 'librex', '~> 0.0.70','>= 0.0.70'
+  s.add_runtime_dependency 'msgpack'
+  s.add_runtime_dependency 'rex'
 end

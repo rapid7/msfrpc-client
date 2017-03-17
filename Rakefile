@@ -1,18 +1,6 @@
-# encoding: utf-8
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 
-task :build => :update do
-	Rake::Task['clean'].execute
-	puts "[*] Building msfrpc-client.gemspec"
-	system "gem build msfrpc-client.gemspec &> /dev/null"
-end
+RSpec::Core::RakeTask.new(:spec)
 
-task :release => :build do
-	puts "[*] Pushing msfrpc-client to rubygems.org"
-	system "gem push msfrpc-client-*.gem &> /dev/null"
-	Rake::Task['clean'].execute
-end
-
-task :clean do
-	system "rm *.gem &> /dev/null"
-end
-
+task :default => :spec
