@@ -74,7 +74,7 @@ parser.on("--disable-finger-users (optional)") do
   opts[:disable_finger_users] = true
 end
 
-parser.on("--disable-snmp-scan (optional)") do 
+parser.on("--disable-snmp-scan (optional)") do
   opts[:disable_snmp_scan] = true
 end
 
@@ -124,51 +124,51 @@ end
 
 # Provide default values for certain options - If there's no alternative set
 # use the default provided by Pro -- see the documentation.
-project 			= opts[:project]	|| usage(parser)
-targets 			= opts[:targets]	|| usage(parser)
-blacklist			= opts[:blacklist]
-speed				= opts[:speed]		|| "5"
-extra_ports			= opts[:extra_ports]
-blacklist_ports			= opts[:blacklist_ports]
-custom_ports			= opts[:custom_ports]
-portscan_timeout		= opts[:portscan_timeout]	|| 300
-source_port			= opts[:source_port]
-custom_nmap_options		= opts[:custom_nmap_options] || 
-disable_udp_probes		= opts[:disable_udp_probes] || false
-disable_finger_users		= opts[:disable_finger_users] || false
-disable_snmp_scan		= opts[:disable_snmp_scan] || false
-disable_service_identification	= opts[:disable_service_identification] || false
-smb_user			= opts[:smb_user] || ""
-smb_pass			= opts[:smb_pass] || ""
-smb_domain			= opts[:smb_domain] || ""
-single_scan			= opts[:single_scan] || false
-fast_detect			= opts[:fast_detect] || false
+project       = opts[:project]  || usage(parser)
+targets       = opts[:targets]  || usage(parser)
+blacklist      = opts[:blacklist]
+speed        = opts[:speed]    || "5"
+extra_ports      = opts[:extra_ports]
+blacklist_ports      = opts[:blacklist_ports]
+custom_ports      = opts[:custom_ports]
+portscan_timeout    = opts[:portscan_timeout]  || 300
+source_port      = opts[:source_port]
+custom_nmap_options    = opts[:custom_nmap_options] ||
+disable_udp_probes    = opts[:disable_udp_probes] || false
+disable_finger_users    = opts[:disable_finger_users] || false
+disable_snmp_scan    = opts[:disable_snmp_scan] || false
+disable_service_identification  = opts[:disable_service_identification] || false
+smb_user      = opts[:smb_user] || ""
+smb_pass      = opts[:smb_pass] || ""
+smb_domain      = opts[:smb_domain] || ""
+single_scan      = opts[:single_scan] || false
+fast_detect      = opts[:fast_detect] || false
 
 # Get the default user from Pro
-user   		= @rpc.call("pro.default_admin_user")['username']
+user       = @rpc.call("pro.default_admin_user")['username']
 
 # Create the task object with all options
-task 		= @rpc.call("pro.start_discover", {
-        'workspace'		=> project,
-        'username' 		=> user,
-        'ips'			=> targets,
-        'DS_BLACKLIST_HOSTS'	=> blacklist,
-        'DS_PORTSCAN_SPEED'	=> speed,
-        'DS_PORTS_EXTRA'	=> extra_ports,
-        'DS_PORTS_BLACKLIST'	=> blacklist_ports,
-        'DS_PORTS_CUSTOM'	=> custom_ports,
-        'DS_PORTSCAN_TIMEOUT' 	=> portscan_timeout,
+task     = @rpc.call("pro.start_discover", {
+        'workspace'    => project,
+        'username'     => user,
+        'ips'      => targets,
+        'DS_BLACKLIST_HOSTS'  => blacklist,
+        'DS_PORTSCAN_SPEED'  => speed,
+        'DS_PORTS_EXTRA'  => extra_ports,
+        'DS_PORTS_BLACKLIST'  => blacklist_ports,
+        'DS_PORTS_CUSTOM'  => custom_ports,
+        'DS_PORTSCAN_TIMEOUT'   => portscan_timeout,
         'DS_PORTSCAN_SOURCE_PORT' => source_port,
-        'DS_CustomNmap'		=> custom_nmap_options,
-        'DS_UDP_PROBES'		=> disable_udp_probes,
-        'DS_FINGER_USERS'	=> disable_finger_users,
-        'DS_SNMP_SCAN'		=> disable_snmp_scan,
-        'DS_IDENTIFY_SERVICES'	=> disable_service_identification,
-        'DS_SMBUser'		=> smb_user,
-        'DS_SMBPass'		=> smb_pass,
-        'DS_SMBDomain'		=> smb_domain,
-        'DS_SINGLE_SCAN'	=> single_scan, 
-        'DS_FAST_DETECT'	=> fast_detect
+        'DS_CustomNmap'    => custom_nmap_options,
+        'DS_UDP_PROBES'    => disable_udp_probes,
+        'DS_FINGER_USERS'  => disable_finger_users,
+        'DS_SNMP_SCAN'    => disable_snmp_scan,
+        'DS_IDENTIFY_SERVICES'  => disable_service_identification,
+        'DS_SMBUser'    => smb_user,
+        'DS_SMBPass'    => smb_pass,
+        'DS_SMBDomain'    => smb_domain,
+        'DS_SINGLE_SCAN'  => single_scan,
+        'DS_FAST_DETECT'  => fast_detect
 })
 
 puts "DEBUG: Running task with #{task.inspect}"

@@ -19,9 +19,8 @@ rpc  = Msf::RPC::Client.new(opts)
 
 $stdout.puts "[*] The RPC client is available in variable 'rpc'"
 if rpc.token
-	$stdout.puts "[*] Sucessfully authenticated to the server"
+  $stdout.puts "[*] Sucessfully authenticated to the server"
 end
 
 $stdout.puts "[*] Starting IRB shell..."
 Rex::Ui::Text::IrbShell.new(binding).run
-
