@@ -25,10 +25,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.licenses      = ['BSD-2-Clause']
 
-  spec.add_runtime_dependency 'msgpack'
-  spec.add_runtime_dependency 'rex'
+  spec.add_runtime_dependency 'msgpack', '~> 1'
+  spec.add_runtime_dependency 'rex', '~> 2'
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "bundler", '~> 1'
+  spec.add_development_dependency "rake", '~> 12'
+  spec.add_development_dependency "rspec", '~> 3'
 end

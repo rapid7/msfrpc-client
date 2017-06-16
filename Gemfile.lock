@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    msfrpc-client (1.1.0)
-      msgpack
-      rex
+    msfrpc-client (1.1.1)
+      msgpack (~> 1)
+      rex (~> 2)
 
 GEM
   remote: https://rubygems.org/
@@ -12,46 +12,46 @@ GEM
     filesize (0.1.1)
     jsobfu (0.4.2)
       rkelly-remix
-    json (2.0.3)
+    json (2.1.0)
     metasm (1.0.3)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.2.0)
     msgpack (1.1.0)
-    nokogiri (1.7.0.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
     rake (12.0.0)
-    rb-readline-r7 (0.5.2.0)
-    rex (2.0.10)
+    rb-readline (0.5.4)
+    rex (2.0.11)
       filesize
       jsobfu (~> 0.4.1)
       json
       metasm (~> 1.0.2)
       nokogiri
-      rb-readline-r7
+      rb-readline
       robots
     rkelly-remix (0.0.7)
     robots (0.10.1)
-    rspec (3.5.0)
-      rspec-core (~> 3.5.0)
-      rspec-expectations (~> 3.5.0)
-      rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.4)
-      rspec-support (~> 3.5.0)
-    rspec-expectations (3.5.0)
+    rspec (3.6.0)
+      rspec-core (~> 3.6.0)
+      rspec-expectations (~> 3.6.0)
+      rspec-mocks (~> 3.6.0)
+    rspec-core (3.6.0)
+      rspec-support (~> 3.6.0)
+    rspec-expectations (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-mocks (3.5.0)
+      rspec-support (~> 3.6.0)
+    rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-support (3.5.0)
+      rspec-support (~> 3.6.0)
+    rspec-support (3.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler
+  bundler (~> 1)
   msfrpc-client!
-  rake
-  rspec
+  rake (~> 12)
+  rspec (~> 3)
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
