@@ -64,7 +64,7 @@ module Msf
         @pass = pass
         res = self.call('auth.login', user, pass)
         unless res && res['result'] == 'success'
-          raise 'authentication failed'
+          raise Msf::RPC::Exception.new('Authentication failed')
         end
         self.token = res['token']
         true
@@ -108,7 +108,7 @@ module Msf
 
         unless meth == 'auth.login'
           unless self.token
-            raise 'client not authenticated'
+            raise Msf::RPC::Exception.new('Client not authenticated')
           end
           args.unshift(self.token)
         end
@@ -268,7 +268,11 @@ module Msf
           'data'   => args.to_msgpack
         )
 
-        res = @cli.send_recv(req)
+        begin
+          res = @cli.send_recv(req)
+        rescue => e
+            raise Msf::RPC::ServerException.new(000, e.message, e.class)
+        end
 
         if res && [200, 401, 403, 500].include?(res.code)
           resp = MessagePack.unpack(res.body)
@@ -286,7 +290,11 @@ module Msf
 
           return resp
         else
-          raise res.inspect
+          if res
+            raise Msf::RPC::Exception.new(res.inspect)
+          else
+            raise Msf::RPC::Exception.new('Unknown error parsing or sending response')
+          end
         end
       end
 
