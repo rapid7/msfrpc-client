@@ -48,13 +48,13 @@ if not @rpc.token
   exit(1)
 end
 
-project 	= opts[:project] 	|| usage(parser)
-path 		= opts[:path]		|| usage(parser)
-user  		= @rpc.call("pro.default_admin_user")['username']
-task 		= @rpc.call("pro.start_import", {
-      'workspace'		=> project,
-      'username' 		=> user,
-      'DS_PATH'		=> path
+project   = opts[:project]   || usage(parser)
+path     = opts[:path]    || usage(parser)
+user      = @rpc.call("pro.default_admin_user")['username']
+task     = @rpc.call("pro.start_import", {
+      'workspace'    => project,
+      'username'     => user,
+      'DS_PATH'    => path
 })
 
 if not task['task_id']

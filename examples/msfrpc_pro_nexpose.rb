@@ -86,32 +86,32 @@ else
 end
 
 # Store the user's settings
-project 			= opts[:project]		|| usage(parser),
-targets 			= opts[:targets]		|| usage(parser),
-blacklist			= opts[:blacklist],
-nexpose_host			= opts[:nexpose_host] 		|| usage(parser),
-nexpose_port			= opts[:nexpose_port]		|| "3780",
-nexpose_user			= opts[:nexpose_user]		|| "nxadmin"
-scan_template			= opts[:scan_template]		|| "pentest-audit"
+project       = opts[:project]    || usage(parser),
+targets       = opts[:targets]    || usage(parser),
+blacklist      = opts[:blacklist],
+nexpose_host      = opts[:nexpose_host]     || usage(parser),
+nexpose_port      = opts[:nexpose_port]    || "3780",
+nexpose_user      = opts[:nexpose_user]    || "nxadmin"
+scan_template      = opts[:scan_template]    || "pentest-audit"
 
 # Get the default user
-user   		= @rpc.call("pro.default_admin_user")['username']
+user       = @rpc.call("pro.default_admin_user")['username']
 
 options = {
-        'workspace'			=> project,
-        'username' 			=> user,
-        'DS_WHITELIST_HOSTS'		=> targets,
-        'DS_NEXPOSE_HOST'		=> nexpose_host,
-        'DS_NEXPOSE_PORT'		=> nexpose_port,
-        'DS_NEXPOSE_USER'		=> nexpose_user,
-        'nexpose_pass'			=> nexpose_pass,
-        'DS_SCAN_TEMPLATE'		=> scan_template
+        'workspace'      => project,
+        'username'       => user,
+        'DS_WHITELIST_HOSTS'    => targets,
+        'DS_NEXPOSE_HOST'    => nexpose_host,
+        'DS_NEXPOSE_PORT'    => nexpose_port,
+        'DS_NEXPOSE_USER'    => nexpose_user,
+        'nexpose_pass'      => nexpose_pass,
+        'DS_SCAN_TEMPLATE'    => scan_template
 }
 
 puts "DEBUG: Running task with #{options}"
 
 # Create the task object with all options
-task 		= @rpc.call("pro.start_exploit", options)
+task     = @rpc.call("pro.start_exploit", options)
 
 
 if not task['task_id']
