@@ -1,5 +1,8 @@
 # -*- coding: binary -*-
 
+require 'net/http'
+require 'openssl'
+
 # MessagePack for data encoding (http://www.msgpack.org/)
 require 'msgpack'
 
@@ -8,10 +11,6 @@ require 'optparse'
 
 # Parse configuration file
 require 'yaml'
-
-# Rex library from the Metasploit Framework
-require 'rex'
-require 'rex/proto/http'
 
 # Constants used by this client
 require 'msfrpc-client/constants'
@@ -44,7 +43,6 @@ module Msf
           uri:   '/api/',
           ssl:   true,
           ssl_version: 'TLS1.2',
-          context: {}
         }.merge(info)
 
         self.token = self.info[:token]
@@ -126,8 +124,6 @@ module Msf
           else
             raise e
           end
-        ensure
-          @cli.close if @cli
         end
       end
 
@@ -135,9 +131,6 @@ module Msf
       #
       # @return [void]
       def close
-        if @cli && @cli.conn?
-          @cli.close
-        end
         @cli = nil
       end
 
@@ -253,28 +246,25 @@ module Msf
 
       def send_rpc_request(args)
         unless @cli
-          @cli = Rex::Proto::Http::Client.new(info[:host], info[:port], info[:context], info[:ssl], info[:ssl_version])
-          @cli.set_config(
-            vhost: info[:host],
-            agent: "Metasploit RPC Client/#{API_VERSION}",
-            read_max_data: 1024 * 1024 * 512
-          )
+          @cli = Net::HTTP.new(info[:host], info[:port])
+          @cli.use_ssl = info[:ssl]
+          @cli.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
 
-        req = @cli.request_cgi(
-          'method' => 'POST',
-          'uri'    => self.info[:uri],
-          'ctype'  => 'binary/message-pack',
-          'data'   => args.to_msgpack
+        req = Net::HTTP::Post.new(self.info[:uri], initheader = {
+          'User-Agent' => "Metasploit RPC Client/#{API_VERSION}",
+          'Content-Type' => 'binary/message-pack'
+          }
         )
+        req.body = args.to_msgpack
 
         begin
-          res = @cli.send_recv(req)
+          res = @cli.request(req)
         rescue => e
             raise Msf::RPC::ServerException.new(000, e.message, e.class)
         end
 
-        if res && [200, 401, 403, 500].include?(res.code)
+        if res && [200, 401, 403, 500].include?(res.code.to_i)
           resp = MessagePack.unpack(res.body)
 
           # Boolean true versus truthy check required here;
