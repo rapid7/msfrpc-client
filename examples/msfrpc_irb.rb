@@ -3,8 +3,6 @@
 require 'rubygems'
 require 'optparse'
 require 'msfrpc-client'
-require 'rex/ui'
-
 
 # Use the RPC option parser to handle standard flags
 opts   = {}
@@ -23,4 +21,31 @@ if rpc.token
 end
 
 $stdout.puts "[*] Starting IRB shell..."
-Rex::Ui::Text::IrbShell.new(binding).run
+
+load('irb.rb')
+
+IRB.setup(nil)
+IRB.conf[:PROMPT_MODE]  = :SIMPLE
+
+# Create a new IRB instance
+irb = IRB::Irb.new(IRB::WorkSpace.new(binding))
+
+# Set the primary irb context so that exit and other intrinsic
+# commands will work.
+IRB.conf[:MAIN_CONTEXT] = irb.context
+
+# Trap interrupt
+old_sigint = trap("SIGINT") do
+  begin
+    irb.signal_handle
+  rescue RubyLex::TerminateLineInput
+    irb.eval_input
+  end
+end
+
+# Keep processing input until the cows come home...
+catch(:IRB_EXIT) do
+  irb.eval_input
+end
+
+trap("SIGINT", old_sigint)
