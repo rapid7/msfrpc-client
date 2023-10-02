@@ -1,0 +1,15 @@
+---
+info:
+  title: Msfrpc Client
+  description: Rapid7 Metasploit API client library written in Ruby
+  x-cortex-git:
+    github:
+      alias: r7org
+      repository: rapid7/msfrpc-client
+  x-cortex-tag: msfrpc-client
+  x-cortex-type: service
+  x-cortex-domain-parents:
+  - tag: metasploit
+openapi: 3.0.1
+servers:
+- url: "/"
